@@ -3,7 +3,9 @@ import pygame
 import keyboard
 
 from Renderer.Render import Renderer
+from Renderer.FourDRenderer import FourDRenderer
 from Models.BasicObjects import *
+from Models.FourDObjects import *
 from Models.CustomModels import CustomModel
 from Renderer.OrigineVector import Axe, OrigineVector
 import random
@@ -18,6 +20,10 @@ rotationAngle = (0, 0, 0)
 
 origineVector = OrigineVector() 
 renderer = Renderer((800, 450), 500)
+
+renderer4 = FourDRenderer((800, 450), 500)
+
+tesseract = FourDCube((0, 0, 100, 100), 50, (255, 255, 255))
 
 tetrahedron = Tetrahedron((-500, 200, 2000), 300 , (0, 255, 255))
 pyramide = Pyramide((0, 0, 400), (200, 300, 200), (255, 255, 0))
@@ -59,10 +65,10 @@ while True:
     except:
         pass
     
-
+    renderer4.Render(tesseract)
     renderer.CleanScreen()
     renderer.TranslateAndRotateAll()
-    renderer.RenderAll()
+    #renderer.RenderAll()
     angle = 0.02
     renderer.Rotate(cube, Axe.Y, angle * 2)
     renderer.Rotate(pyramide, Axe.Y, angle)

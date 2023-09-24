@@ -3,11 +3,12 @@ import math
 class Object:
     render = []
     translateAndRotate = []
-    def __init__(self, center:tuple, color: tuple, renderEdge=False, invertFace=False, lock=False, renderAll=True, translateAndRotate=True):
-        if renderAll:
-            Object.render.append(self) 
-        if translateAndRotate:
-            Object.translateAndRotate.append(self)
+    def __init__(self, center:tuple, color: tuple, renderEdge=False, invertFace=False, lock=False, renderAll=True, translateAndRotate=True, ThreeD=True):
+        if ThreeD:
+            if renderAll:
+                Object.render.append(self) 
+            if translateAndRotate:
+                Object.translateAndRotate.append(self)
         self.renderEdge = renderEdge
         self.invertFace = invertFace
         self.vertices = []
@@ -15,14 +16,15 @@ class Object:
         self.faces = []
         self.color = color
         self.lock = lock
-        #form the center of the screen
-        class Center():
-            def __init__(self):
-                self.x = center[0]
-                self.y = -center[1]
-                self.z = center[2]
+        if ThreeD:
+            #form the center of the scren
+            class Center():
+                def __init__(self):
+                    self.x = center[0]
+                    self.y = -center[1]
+                    self.z = center[2]
         
-        self.center = Center()
+            self.center = Center()
     
     def CalculatePointsFromCenter(self):
         pass
