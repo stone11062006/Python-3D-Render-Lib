@@ -47,9 +47,9 @@ class FourDShapes(FourDObject):
 
 class FourDCube(FourDShapes):
 
-    def __init__(self, center: tuple, size: float, color: tuple, invertFace=False, lock=False):
+    def __init__(self, center: tuple, size: float, color: tuple):
 
-        FourDShapes.__init__(self, center, (size, size, size, size), color, invertFace, lock)
+        FourDShapes.__init__(self, center, (size, size, size, size), color, False, False)
         self.CalculatePointsFromCenter()
 
     def CalculatePointsFromCenter(self):

@@ -66,6 +66,7 @@ while True:
         pass
     
     renderer4.Render(tesseract)
+    renderer4.CleanScreen()
     renderer.CleanScreen()
     renderer.TranslateAndRotateAll()
     #renderer.RenderAll()
