@@ -6,7 +6,7 @@ from Models.BasicObjects import Object, Vector, Light, Line
 from Renderer.Matrix import RotationMatix, Matrix
 from Renderer.OrigineVector import OrigineVector, Axe
 
-class Renderer():
+class Renderer(arcade.Window):
 
     def __init__(self, screenDimension: tuple, focalDistance: float, lightingSystem=True):
 
@@ -22,7 +22,7 @@ class Renderer():
         self.rotationAngle = (0, 0, 0)
         self.OV = OrigineVector()
         
-        arcade.open_window(self.screenDimension.width, self.screenDimension.height, "game")
+        super().__init__(self.screenDimension.width, self.screenDimension.height, "game")
 
     def Render(self, object:Object, renderFace:bool = True):
 
@@ -35,8 +35,8 @@ class Renderer():
             i = 0
             for vertex in object.vertices:
                 if vertex[2] > -self.FOV :
-                    X = (vertex[0]/(self.FOV + vertex[2])) * self.FOV + self.display.get_width()/2
-                    Y = (vertex[1]/(self.FOV + vertex[2])) * self.FOV + self.display.get_height()/2
+                    X = (vertex[0]/(self.FOV + vertex[2])) * self.FOV + self.screenDimension.width/2
+                    Y = (vertex[1]/(self.FOV + vertex[2])) * self.FOV + self.screenDimension.height/2
                     displayCoord[n] = (X, Y)
                 else:
                     notValidVertexs.append(vertex)
@@ -44,33 +44,34 @@ class Renderer():
                 n += 1
 
             if not renderFace:
-                arcade.start_render()
                 for edge in object.edges:
-                    if displayCoord[edge[0]] != ("", "") and displayCoord[edge[1]] != ("", "") and displayCoord[edge[0]] > (0, 0) and displayCoord[edge[0]] < (self.display.get_width(), self.display.get_height()) and displayCoord[edge[1]] > (0, 0) and displayCoord[edge[1]] < (self.display.get_width(), self.display.get_height()):
+                    if displayCoord[edge[0]] != ("", "") and displayCoord[edge[1]] != ("", "") and displayCoord[edge[0]] > (0, 0) and displayCoord[edge[0]] < (self.screenDimension.width, self.screenDimension.height) and displayCoord[edge[1]] > (0, 0) and displayCoord[edge[1]] < (self.screenDimension.width, self.screenDimension.height):
                         arcade.draw_line(displayCoord[edge[0]][0], displayCoord[edge[0]][1], displayCoord[edge[1]][0], displayCoord[edge[1]][1],object.color)
-                arcade.finish_render()
+                
             else:
                 for face in self.GetFacesByDistances(object.faces, object.vertices):
-                    if displayCoord[face[0]] != ("", "") and displayCoord[face[0]] > (0, 0) and displayCoord[face[0]] < (self.display.get_width(), self.display.get_height()) and   displayCoord[face[1]] != ("", "") and displayCoord[face[1]] > (0, 0) and displayCoord[face[1]] < (self.display.get_width(), self.display.get_height()) and  displayCoord[face[2]] != ("", "") and displayCoord[face[2]] > (0, 0) and displayCoord[face[2]] < (self.display.get_width(), self.display.get_height()):
+                    if displayCoord[face[0]] != ("", "") and displayCoord[face[0]] > (0, 0) and displayCoord[face[0]] < (self.screenDimension.width, self.screenDimension.height) and displayCoord[face[1]] != ("", "") and displayCoord[face[1]] > (0, 0) and displayCoord[face[1]] < (self.screenDimension.width, self.screenDimension.height) and  displayCoord[face[2]] != ("", "") and displayCoord[face[2]] > (0, 0) and displayCoord[face[2]] < (self.screenDimension.width, self.screenDimension.height):
                     
                         if (self.RotateClockwise(face, displayCoord) and not object.invertFace) or (not self.RotateClockwise(face, displayCoord) and object.invertFace):
 
                             if self.lightingSystem:
-                                pygame.draw.polygon(self.display, self.GetLighting(face, object.vertices, object.color, (object.center.x, object.center.y, object.center.z), object.invertFace), (displayCoord[face[0]], displayCoord[face[1]], displayCoord[face[2]]))
+                                #pygame.draw.polygon(self.display, self.GetLighting(face, object.vertices, object.color, (object.center.x, object.center.y, object.center.z), object.invertFace), (displayCoord[face[0]], displayCoord[face[1]], displayCoord[face[2]]))
+                                arcade.draw_triangle_filled(displayCoord[face[0]][0], displayCoord[face[0]][1], displayCoord[face[1]][0], displayCoord[face[1]][1], displayCoord[face[2]][0], displayCoord[face[2]][1], self.GetLighting(face, object.vertices, object.color, (object.center.x, object.center.y, object.center.z), object.invertFace))
                             else:
-                                pygame.draw.polygon(self.display, object.color, (displayCoord[face[0]], displayCoord[face[1]], displayCoord[face[2]]))
-        
+                                #pygame.draw.polygon(self.display, object.color, (displayCoord[face[0]], displayCoord[face[1]], displayCoord[face[2]]))
+                                arcade.draw_triangle_filled(displayCoord[face[0]][0], displayCoord[face[0]][1], displayCoord[face[1]][0], displayCoord[face[1]][1], displayCoord[face[2]][0], displayCoord[face[2]][1],object.color)
+                
         else:
             
             if object.center.z > -self.FOV:
-                X = (object.center.x/(self.FOV + object.center.z)) * self.FOV + self.display.get_width()/2
-                Y = (object.center.y/(self.FOV + object.center.z)) * self.FOV + self.display.get_height()/2
+                X = (object.center.x/(self.FOV + object.center.z)) * self.FOV + self.screenDimension.width/2
+                Y = (object.center.y/(self.FOV + object.center.z)) * self.FOV + self.screenDimension.height/2
                 displayCoord = (X, Y)
             else:
                 displayCoord = ("", "")
 
-            if displayCoord != ("", "") and displayCoord > (0, 0) and displayCoord < (self.display.get_width(), self.display.get_height()):
-                pygame.draw.circle(self.display, object.color, displayCoord, 10)
+            if displayCoord != ("", "") and displayCoord > (0, 0) and displayCoord < (self.screenDimension.width, self.screenDimension.height):
+                arcade.draw_circle_filled(displayCoord[0], displayCoord[1], 10, arcade.float_to_byte_color(object.color))
 
     def TranslateAndRotate(self, object:Object):
         if not object.lock:
@@ -141,7 +142,7 @@ class Renderer():
         self.rotationAngle = (0, 0, 0) 
 
     def CleanScreen(self):
-        self.display.fill((0,0,0))
+        arcade.View.clear(self)
 
     def RotateClockwise(self, face: tuple, projectedVertices):
 
@@ -208,11 +209,13 @@ class Renderer():
             objByDistance[i] = duplicatedObjList[ind[0]]
             i += 1
 
+        arcade.start_render()
         for o in objByDistance:
             if isinstance(o, Object):
                     self.Render(o, not o.renderEdge)
             else:
                 print("notObjectInListExeptionError")
+        arcade.finish_render()
     
     def TranslateAndRotateAll(self):
 
@@ -263,7 +266,7 @@ class Renderer():
             newColor1 = 255
         if newColor[2] > 255:
             newColor2 = 255
-        newColor = (newColor0, newColor1, newColor2)
+        newColor = (math.floor(newColor0), math.floor(newColor1), math.floor(newColor2))
         return newColor
 
     def GetFaceNormal(self, face: tuple, vertices, center: tuple, invertFace:bool):

@@ -19,7 +19,7 @@ class Object:
         class Center():
             def __init__(self):
                 self.x = center[0]
-                self.y = -center[1]
+                self.y = center[1]
                 self.z = center[2]
         
         self.center = Center()
@@ -200,11 +200,11 @@ class Pyramide(Shape):
         self.edges = [n for n in range(8)]
         self.faces = [n for n in range(6)]
         
-        self.vertices[0] = (self.center.x - self.sizeBy2.x, self.center.y + self.sizeBy2.y, self.center.z - self.sizeBy2.z)
-        self.vertices[1] = (self.center.x + self.sizeBy2.x, self.center.y + self.sizeBy2.y, self.center.z - self.sizeBy2.z)
-        self.vertices[2] = (self.center.x + self.sizeBy2.x, self.center.y + self.sizeBy2.y, self.center.z + self.sizeBy2.z)
-        self.vertices[3] = (self.center.x - self.sizeBy2.x, self.center.y + self.sizeBy2.y, self.center.z + self.sizeBy2.z)
-        self.vertices[4] = (self.center.x, self.center.y - self.sizeBy2.y, self.center.z)
+        self.vertices[0] = (self.center.x - self.sizeBy2.x, self.center.y - self.sizeBy2.y, self.center.z - self.sizeBy2.z)
+        self.vertices[1] = (self.center.x + self.sizeBy2.x, self.center.y - self.sizeBy2.y, self.center.z - self.sizeBy2.z)
+        self.vertices[2] = (self.center.x + self.sizeBy2.x, self.center.y - self.sizeBy2.y, self.center.z + self.sizeBy2.z)
+        self.vertices[3] = (self.center.x - self.sizeBy2.x, self.center.y - self.sizeBy2.y, self.center.z + self.sizeBy2.z)
+        self.vertices[4] = (self.center.x, self.center.y + self.sizeBy2.y, self.center.z)
 
         self.edges[0] = (0,1)
         self.edges[1] = (1,2)
@@ -238,10 +238,10 @@ class Tetrahedron(Shape):
         self.edges = [n for n in range(6)]
         self.faces = [n for n in range(4)]
         
-        self.vertices[0] = (self.center.x, self.center.y + self.sizeBy2.y, self.center.z + self.sizeBy2.z)
-        self.vertices[1] = (self.center.x - (math.sqrt(3)/2)*self.sizeBy2.x, self.center.y + self.sizeBy2.y, self.center.z - (1/2)*self.sizeBy2.z)
-        self.vertices[2] = (self.center.x + (math.sqrt(3)/2)*self.sizeBy2.x, self.center.y + self.sizeBy2.y, self.center.z - (1/2)*self.sizeBy2.z)
-        self.vertices[3] = (self.center.x, self.center.y - self.sizeBy2.y, self.center.z)
+        self.vertices[0] = (self.center.x, self.center.y - self.sizeBy2.y, self.center.z + self.sizeBy2.z)
+        self.vertices[1] = (self.center.x - (math.sqrt(3)/2)*self.sizeBy2.x, self.center.y - self.sizeBy2.y, self.center.z - (1/2)*self.sizeBy2.z)
+        self.vertices[2] = (self.center.x + (math.sqrt(3)/2)*self.sizeBy2.x, self.center.y - self.sizeBy2.y, self.center.z - (1/2)*self.sizeBy2.z)
+        self.vertices[3] = (self.center.x, self.center.y + self.sizeBy2.y, self.center.z)
 
         self.edges[0] = (0,1)
         self.edges[1] = (1,2)

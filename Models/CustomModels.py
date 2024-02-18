@@ -52,7 +52,7 @@ class CustomModel(Shape):
                             coord = coord + l
                     newVert[2] = float(coord) 
                     newVert[0] = newVert[0] * self.size.x + self.center.x
-                    newVert[1] = newVert[1] * self.size.y + self.center.y
+                    newVert[1] = newVert[1] * -self.size.y - self.center.y
                     newVert[2] = newVert[2] * self.size.z + self.center.z
                     self.vertices.append(tuple(newVert))
                     print("v " + str(newVert))
