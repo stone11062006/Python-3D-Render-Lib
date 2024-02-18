@@ -1,5 +1,5 @@
 from typing import Any
-import pygame
+import arcade
 import keyboard
 
 from Renderer.Render import Renderer
@@ -7,9 +7,6 @@ from Models.BasicObjects import *
 from Models.CustomModels import CustomModel
 from Renderer.OrigineVector import Axe, OrigineVector
 import random
-
-
-clock = pygame.time.Clock()
 
 angle = 0
 rotSpeed = 0.03
@@ -69,9 +66,3 @@ while True:
     renderer.Rotate(pyramide2, Axe.Y, angle, cube2)
     renderer.Rotate(tetrahedron, Axe.X, angle)
     renderer.Rotate(tetrahedron, Axe.Z, angle)
-    clock.tick(60)
-    print(clock.get_fps())
-    for event in pygame.event.get():
-        if(event.type == pygame.QUIT):
-            pygame.quit()
-    pygame.display.update()

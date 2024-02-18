@@ -1,5 +1,5 @@
 
-import pygame
+import arcade
 import math
 
 from Models.BasicObjects import Object, Vector, Light, Line
@@ -22,8 +22,7 @@ class Renderer():
         self.rotationAngle = (0, 0, 0)
         self.OV = OrigineVector()
         
-        self.display = pygame.display.set_mode((self.screenDimension.width, self.screenDimension.height))
-        pygame.init()
+        arcade.open_window(self.screenDimension.width, self.screenDimension.height, "game")
 
     def Render(self, object:Object, renderFace:bool = True):
 
@@ -45,10 +44,11 @@ class Renderer():
                 n += 1
 
             if not renderFace:
+                arcade.start_render()
                 for edge in object.edges:
                     if displayCoord[edge[0]] != ("", "") and displayCoord[edge[1]] != ("", "") and displayCoord[edge[0]] > (0, 0) and displayCoord[edge[0]] < (self.display.get_width(), self.display.get_height()) and displayCoord[edge[1]] > (0, 0) and displayCoord[edge[1]] < (self.display.get_width(), self.display.get_height()):
-                        pygame.draw.line(self.display, object.color, displayCoord[edge[0]], displayCoord[edge[1]])
-
+                        arcade.draw_line(displayCoord[edge[0]][0], displayCoord[edge[0]][1], displayCoord[edge[1]][0], displayCoord[edge[1]][1],object.color)
+                arcade.finish_render()
             else:
                 for face in self.GetFacesByDistances(object.faces, object.vertices):
                     if displayCoord[face[0]] != ("", "") and displayCoord[face[0]] > (0, 0) and displayCoord[face[0]] < (self.display.get_width(), self.display.get_height()) and   displayCoord[face[1]] != ("", "") and displayCoord[face[1]] > (0, 0) and displayCoord[face[1]] < (self.display.get_width(), self.display.get_height()) and  displayCoord[face[2]] != ("", "") and displayCoord[face[2]] > (0, 0) and displayCoord[face[2]] < (self.display.get_width(), self.display.get_height()):
