@@ -15,11 +15,11 @@ rotationAngle = (0, 0, 0)
 
 origineVector = OrigineVector() 
 
+renderer = Renderer((800, 450), 500)
+angle = 0.02
 
 def main():
-    renderer = Renderer((800, 450), 500)
     renderer.TranslateAndRotateAll()
-    angle = 0.02
     renderer.Rotate(cube, Axe.Y, angle * 2)
     renderer.Rotate(pyramide, Axe.Y, angle)
     renderer.Rotate(pyramide2, Axe.Y, angle, cube2)
@@ -27,6 +27,16 @@ def main():
     renderer.Rotate(tetrahedron, Axe.Z, angle)
     renderer.RenderAll()
     arcade.run()
+    
+def run():
+    renderer.TranslateAndRotateAll()
+    angle = angle + 0.02
+    renderer.Rotate(cube, Axe.Y, angle * 2)
+    renderer.Rotate(pyramide, Axe.Y, angle)
+    renderer.Rotate(pyramide2, Axe.Y, angle, cube2)
+    renderer.Rotate(tetrahedron, Axe.X, angle)
+    renderer.Rotate(tetrahedron, Axe.Z, angle)
+    renderer.RenderAll()
 
 
 tetrahedron = Tetrahedron((-500, 200, 2000), 300 , (0, 255, 255))
@@ -43,7 +53,11 @@ light4 = Light((-1000, -1000, 0), 1, (255, 255, 255))
 
 if __name__ == "__main__":
     main()
-    
+
+
+while True:
+    run()
+
 #while True:
 #
 #    try:
