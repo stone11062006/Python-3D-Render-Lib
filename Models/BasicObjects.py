@@ -1,3 +1,18 @@
+#    Python-3D-Render-Lib Copyright (C) 2024  Hanchard Pierre
+#
+#    Python-3D-Render-Lib is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as published
+#    by the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    Python-3D-Render-Lib is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with Python-3D-Render-Lib.  If not, see <https://www.gnu.org/licenses/>.
+
 import math
 
 class Object:
